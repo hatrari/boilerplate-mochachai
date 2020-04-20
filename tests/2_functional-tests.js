@@ -137,11 +137,17 @@ suite('Functional Tests', function() {
       // Try it again. This time without help !!
       test('send {surname: "da Verrazzano"}', function(done) {
         /** place the chai-http request code here... **/
-        
+        chai.request(server)
         /** place your tests inside the callback **/
-        
-        assert.fail(); // remove this after adding tests
-        done();
+        .put('/travellers')
+        .send({surname: 'da Verrazzano'})
+        .end((err, res) => {
+          assert.equal(res.status, 200);
+          assert.equal(res.type, 'application/json');
+          assert.equal(res.body.name, 'Giovanni');
+          assert.equal(res.body.surname, 'da Verrazzano');
+          done();
+        });
       });
     });
 
